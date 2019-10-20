@@ -10,9 +10,9 @@ library(tidyverse)
 library(magrittr)
 library(magick)
 
-################################################################################
-################       Now, on to visualising the board!        ################
-################################################################################
+###############################################################################
+################       Now, on to visualising the board!        ###############
+###############################################################################
 
 # Let's import some hexagons, taken from Ryan Schenk's photo stream under a creative commons share alike license (https://www.flickr.com/photos/ryanschenk/5167761311/)
 
