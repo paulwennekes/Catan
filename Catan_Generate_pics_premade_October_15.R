@@ -10,7 +10,9 @@ library(tidyverse)
 library(magrittr)
 library(magick)
 
+#####
 # Creating three tibbles which represent the three data types on the map of Catan, being hexagon, edge, and corner:
+#####
 
 brick2<-image_read("brick2.png")
 brick3<-image_read("brick3.png")
