@@ -10,9 +10,9 @@ library(tidyverse)
 library(magrittr)
 library(magick)
 
-###############################################################################
-################       Now, on to visualising the board!        ###############
-###############################################################################
+################################################################################
+################       Now, on to visualising the board!        ################
+################################################################################
 
 # Let's import some hexagons, taken from Ryan Schenk's photo stream under a creative commons share alike license (https://www.flickr.com/photos/ryanschenk/5167761311/)
 
@@ -1533,8 +1533,6 @@ image_write(wood11, "/Users/Paul/Desktop/R_Catan/wood11.png")
 image_write(wood12, "/Users/Paul/Desktop/R_Catan/wood12.png")
 image_write(desert0, "/Users/Paul/Desktop/R_Catan/desert0.png")
 
-#####
-
 # Harbours and sea!
 # Harbour colour codes:
 # 
@@ -1544,7 +1542,9 @@ image_write(desert0, "/Users/Paul/Desktop/R_Catan/desert0.png")
 # ore = #7A756F
 # sheep = #8FB222
 
-# circles first: 
+
+sea_tile <- image_read("sea.png")
+harbour_tile <- image_read("harbour.png")
 
 harbour_general_circle <-
   image_extent(
@@ -1561,6 +1561,10 @@ harbour_general_circle <-
     gravity = "SouthEast",
     color = "none"
   )
+harbour_general_circle <- image_fill(harbour_general_circle, "none", "+5+5", fuzz = 5)
+harbour_general_circle <- image_fill(harbour_general_circle, "none", "+890+615", fuzz = 5)
+harbour_general_circle <- image_fill(harbour_general_circle, "none", "+515+1000", fuzz = 5)
+harbour_general_circle <- image_fill(harbour_general_circle, "none", "+890+1000", fuzz = 5)
 
 grain_circle <-image_fill(circle, "#F7D55A", "+200+200", fuzz = 5)
 wood_circle <- image_fill(circle, "#093C1B", "+200+200", fuzz = 5)
@@ -1568,10 +1572,14 @@ ore_circle <- image_fill(circle, "#7A756F", "+200+200", fuzz = 5)
 sheep_circle <- image_fill(circle, "#8FB222", "+200+200", fuzz = 5)
 brick_circle <- image_fill(circle, "#862917", "+200+200", fuzz = 5)
 
-harbour_grain_circle <-
+
+
+
+
+harbour_specific_circle <-
   image_extent(
     image_annotate(
-      grain_circle,
+      circle,
       "2:1",
       gravity = "Center",
       location = "+0-0",
@@ -1584,11 +1592,98 @@ harbour_grain_circle <-
     color = "none"
   )
 
-harbour_wood_circle <-
+harbour_specific_circle <- image_fill(harbour_specific_circle, "none", "+5+5", fuzz = 5)
+harbour_specific_circle <- image_fill(harbour_specific_circle, "none", "+890+615", fuzz = 5)
+harbour_specific_circle <- image_fill(harbour_specific_circle, "none", "+515+1000", fuzz = 5)
+harbour_specific_circle <- image_fill(harbour_specific_circle, "none", "+890+1000", fuzz = 5)
+
+circle <- image_mosaic(c(black2, beige3))
+
+
+harbour_grain_circle <-image_fill(harbour_general_circle, "#F7D55A", "+800+900", fuzz = 5)
+harbour_wood_circle <- image_fill(harbour_general_circle, "#093C1B", "+800+900", fuzz = 5)
+harbour_ore_circle <- image_fill(harbour_general_circle, "#7A756F", "+800+900", fuzz = 5)
+harbour_sheep_circle <- image_fill(harbour_general_circle, "#8FB222", "+800+900", fuzz = 5)
+harbour_brick_circle <- image_fill(harbour_general_circle, "#862917", "+800+900", fuzz = 5)
+  
+
+
+
+harbour_general <- 
+
+
+sea1_rotate <- image_rotate(sea_tile, 30)
+sea2_rotate <- image_rotate(sea_tile, 90)
+sea3_rotate <- image_rotate(sea_tile, 150)
+sea4_rotate <- image_rotate(sea_tile, 210)
+sea5_rotate <- image_rotate(sea_tile, 270)
+sea6_rotate <- image_rotate(sea_tile, 330)
+harbour1_rotate <- image_rotate(harbour_tile, 30)
+harbour2_rotate <- image_rotate(harbour_tile, 90)
+harbour3_rotate <- image_rotate(harbour_tile, 150)
+harbour4_rotate <- image_rotate(harbour_tile, 210)
+harbour5_rotate <- image_rotate(harbour_tile, 270)
+harbour6_rotate <- image_rotate(harbour_tile, 330)
+
+image_write(sea1_rotate, "/Users/Paul/Desktop/R_Catan/sea1_rotate.png")
+image_write(sea2_rotate, "/Users/Paul/Desktop/R_Catan/sea2_rotate.png")
+image_write(sea3_rotate, "/Users/Paul/Desktop/R_Catan/sea3_rotate.png")
+image_write(sea4_rotate, "/Users/Paul/Desktop/R_Catan/sea4_rotate.png")
+image_write(sea5_rotate, "/Users/Paul/Desktop/R_Catan/sea5_rotate.png")
+image_write(sea6_rotate, "/Users/Paul/Desktop/R_Catan/sea6_rotate.png")
+
+sea1_none <-
+  image_fill(sea1_rotate,
+             color = "none",
+             point = "+5+5",
+             fuzz = 15)
+sea2_none <-
+  image_fill(sea2_rotate,
+             color = "none",
+             point = "+5+5",
+             fuzz = 15)
+sea3_none <-
+  image_fill(sea3_rotate,
+             color = "none",
+             point = "+5+5",
+             fuzz = 15)
+sea4_none <-
+  image_fill(sea4_rotate,
+             color = "none",
+             point = "+5+5",
+             fuzz = 15)
+sea5_none <-
+  image_fill(sea5_rotate,
+             color = "none",
+             point = "+5+5",
+             fuzz = 15)
+sea6_none <-
+  image_fill(sea6_rotate,
+             color = "none",
+             point = "+5+5",
+             fuzz = 15)
+
+sea1 <- image_trim(sea1_none, fuzz = 6)
+sea2 <- image_trim(sea2_none, fuzz = 6)
+sea3 <- image_trim(sea3_none, fuzz = 6)
+sea4 <- image_trim(sea4_none, fuzz = 6)
+sea5 <- image_trim(sea5_none, fuzz = 6)
+sea6 <- image_trim(sea6_none, fuzz = 6)
+
+image_write(sea1, "/Users/Paul/Desktop/R_Catan/sea1_tile.png")
+image_write(sea2, "/Users/Paul/Desktop/R_Catan/sea2_tile.png")
+image_write(sea3, "/Users/Paul/Desktop/R_Catan/sea3_tile.png")
+image_write(sea4, "/Users/Paul/Desktop/R_Catan/sea4_tile.png")
+image_write(sea5, "/Users/Paul/Desktop/R_Catan/sea5_tile.png")
+image_write(sea6, "/Users/Paul/Desktop/R_Catan/sea6_tile.png")
+
+
+
+harbour_tile_general <-
   image_extent(
     image_annotate(
-      wood_circle,
-      "2:1",
+      circle,
+      "3:1",
       gravity = "Center",
       location = "+0-0",
       degrees = 0,
@@ -1600,339 +1695,7 @@ harbour_wood_circle <-
     color = "none"
   )
 
-harbour_ore_circle <-
-  image_extent(
-    image_annotate(
-      ore_circle,
-      "2:1",
-      gravity = "Center",
-      location = "+0-0",
-      degrees = 0,
-      size = 200,
-      weight = 400
-    ),
-    "898x1010",
-    gravity = "SouthEast",
-    color = "none"
-  )
-
-harbour_sheep_circle <-
-  image_extent(
-    image_annotate(
-      sheep_circle,
-      "2:1",
-      gravity = "Center",
-      location = "+0-0",
-      degrees = 0,
-      size = 200,
-      weight = 400
-    ),
-    "898x1010",
-    gravity = "SouthEast",
-    color = "none"
-  )
-
-harbour_brick_circle <-
-  image_extent(
-    image_annotate(
-      brick_circle,
-      "2:1",
-      gravity = "Center",
-      location = "+0-0",
-      degrees = 0,
-      size = 200,
-      weight = 400
-    ),
-    "898x1010",
-    gravity = "SouthEast",
-    color = "none"
-  )
 
 
-harbour_brick_circle <- image_fill(harbour_brick_circle, "none", "+5+5", fuzz = 5)
-harbour_brick_circle <- image_fill(harbour_brick_circle, "none", "+890+615", fuzz = 5)
-harbour_brick_circle <- image_fill(harbour_brick_circle, "none", "+515+1000", fuzz = 5)
-harbour_brick_circle <- image_fill(harbour_brick_circle, "none", "+890+1000", fuzz = 5)
-harbour_brick_circle <- image_fill(harbour_brick_circle, "none", "+515+615", fuzz = 5)
-harbour_sheep_circle <- image_fill(harbour_sheep_circle, "none", "+5+5", fuzz = 5)
-harbour_sheep_circle <- image_fill(harbour_sheep_circle, "none", "+890+615", fuzz = 5)
-harbour_sheep_circle <- image_fill(harbour_sheep_circle, "none", "+515+1000", fuzz = 5)
-harbour_sheep_circle <- image_fill(harbour_sheep_circle, "none", "+890+1000", fuzz = 5)
-harbour_sheep_circle <- image_fill(harbour_sheep_circle, "none", "+515+615", fuzz = 5)
-harbour_ore_circle <- image_fill(harbour_ore_circle, "none", "+5+5", fuzz = 5)
-harbour_ore_circle <- image_fill(harbour_ore_circle, "none", "+890+615", fuzz = 5)
-harbour_ore_circle <- image_fill(harbour_ore_circle, "none", "+515+1000", fuzz = 5)
-harbour_ore_circle <- image_fill(harbour_ore_circle, "none", "+890+1000", fuzz = 5)
-harbour_ore_circle <- image_fill(harbour_ore_circle, "none", "+515+615", fuzz = 5)
-harbour_wood_circle <- image_fill(harbour_wood_circle, "none", "+5+5", fuzz = 5)
-harbour_wood_circle <- image_fill(harbour_wood_circle, "none", "+890+615", fuzz = 5)
-harbour_wood_circle <- image_fill(harbour_wood_circle, "none", "+515+1000", fuzz = 5)
-harbour_wood_circle <- image_fill(harbour_wood_circle, "none", "+890+1000", fuzz = 5)
-harbour_wood_circle <- image_fill(harbour_wood_circle, "none", "+515+615", fuzz = 5)
-harbour_grain_circle <- image_fill(harbour_grain_circle, "none", "+5+5", fuzz = 5)
-harbour_grain_circle <- image_fill(harbour_grain_circle, "none", "+890+615", fuzz = 5)
-harbour_grain_circle <- image_fill(harbour_grain_circle, "none", "+515+1000", fuzz = 5)
-harbour_grain_circle <- image_fill(harbour_grain_circle, "none", "+890+1000", fuzz = 5)
-harbour_grain_circle <- image_fill(harbour_grain_circle, "none", "+515+615", fuzz = 5)
-harbour_general_circle <- image_fill(harbour_general_circle, "none", "+5+5", fuzz = 5)
-harbour_general_circle <- image_fill(harbour_general_circle, "none", "+890+615", fuzz = 5)
-harbour_general_circle <- image_fill(harbour_general_circle, "none", "+515+1000", fuzz = 5)
-harbour_general_circle <- image_fill(harbour_general_circle, "none", "+890+1000", fuzz = 5)
-harbour_general_circle <- image_fill(harbour_general_circle, "none", "+515+615", fuzz = 5)
 
-# now the tiles:
 
-sea_tile <- image_read("sea.png")
-harbour_tile <- image_read("harbour.png")
-
-sea_1_rotate<-image_rotate(sea_tile,30)
-sea_2_rotate<-image_rotate(sea_tile,90)
-sea_3_rotate<-image_rotate(sea_tile,150)
-sea_4_rotate<-image_rotate(sea_tile,210)
-sea_5_rotate<-image_rotate(sea_tile,270)
-sea_6_rotate<-image_rotate(sea_tile,330)
-harbour_wood_1_rotate<-image_rotate(harbour_tile,30)
-harbour_wood_2_rotate<-image_rotate(harbour_tile,90)
-harbour_wood_3_rotate<-image_rotate(harbour_tile,150)
-harbour_wood_4_rotate<-image_rotate(harbour_tile,210)
-harbour_wood_5_rotate<-image_rotate(harbour_tile,270)
-harbour_wood_6_rotate<-image_rotate(harbour_tile,330)
-harbour_grain_1_rotate<-image_rotate(harbour_tile,30)
-harbour_grain_2_rotate<-image_rotate(harbour_tile,90)
-harbour_grain_3_rotate<-image_rotate(harbour_tile,150)
-harbour_grain_4_rotate<-image_rotate(harbour_tile,210)
-harbour_grain_5_rotate<-image_rotate(harbour_tile,270)
-harbour_grain_6_rotate<-image_rotate(harbour_tile,330)
-harbour_ore_1_rotate<-image_rotate(harbour_tile,30)
-harbour_ore_2_rotate<-image_rotate(harbour_tile,90)
-harbour_ore_3_rotate<-image_rotate(harbour_tile,150)
-harbour_ore_4_rotate<-image_rotate(harbour_tile,210)
-harbour_ore_5_rotate<-image_rotate(harbour_tile,270)
-harbour_ore_6_rotate<-image_rotate(harbour_tile,330)
-harbour_sheep_1_rotate<-image_rotate(harbour_tile,30)
-harbour_sheep_2_rotate<-image_rotate(harbour_tile,90)
-harbour_sheep_3_rotate<-image_rotate(harbour_tile,150)
-harbour_sheep_4_rotate<-image_rotate(harbour_tile,210)
-harbour_sheep_5_rotate<-image_rotate(harbour_tile,270)
-harbour_sheep_6_rotate<-image_rotate(harbour_tile,330)
-harbour_brick_1_rotate<-image_rotate(harbour_tile,30)
-harbour_brick_2_rotate<-image_rotate(harbour_tile,90)
-harbour_brick_3_rotate<-image_rotate(harbour_tile,150)
-harbour_brick_4_rotate<-image_rotate(harbour_tile,210)
-harbour_brick_5_rotate<-image_rotate(harbour_tile,270)
-harbour_brick_6_rotate<-image_rotate(harbour_tile,330)
-harbour_general_1_rotate<-image_rotate(harbour_tile,30)
-harbour_general_2_rotate<-image_rotate(harbour_tile,90)
-harbour_general_3_rotate<-image_rotate(harbour_tile,150)
-harbour_general_4_rotate<-image_rotate(harbour_tile,210)
-harbour_general_5_rotate<-image_rotate(harbour_tile,270)
-harbour_general_6_rotate<-image_rotate(harbour_tile,330)
-
-sea_1_rotate<-image_fill(sea_1_rotate,color="none",point="+5+5",fuzz = 10)
-sea_2_rotate<-image_fill(sea_2_rotate,color="none",point="+5+5",fuzz = 10)
-sea_3_rotate<-image_fill(sea_3_rotate,color="none",point="+5+5",fuzz = 10)
-sea_4_rotate<-image_fill(sea_4_rotate,color="none",point="+5+5",fuzz = 10)
-sea_5_rotate<-image_fill(sea_5_rotate,color="none",point="+5+5",fuzz = 10)
-sea_6_rotate<-image_fill(sea_6_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_wood_1_rotate<-image_fill(harbour_wood_1_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_wood_2_rotate<-image_fill(harbour_wood_2_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_wood_3_rotate<-image_fill(harbour_wood_3_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_wood_4_rotate<-image_fill(harbour_wood_4_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_wood_5_rotate<-image_fill(harbour_wood_5_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_wood_6_rotate<-image_fill(harbour_wood_6_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_grain_1_rotate<-image_fill(harbour_grain_1_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_grain_2_rotate<-image_fill(harbour_grain_2_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_grain_3_rotate<-image_fill(harbour_grain_3_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_grain_4_rotate<-image_fill(harbour_grain_4_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_grain_5_rotate<-image_fill(harbour_grain_5_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_grain_6_rotate<-image_fill(harbour_grain_6_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_ore_1_rotate<-image_fill(harbour_ore_1_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_ore_2_rotate<-image_fill(harbour_ore_2_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_ore_3_rotate<-image_fill(harbour_ore_3_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_ore_4_rotate<-image_fill(harbour_ore_4_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_ore_5_rotate<-image_fill(harbour_ore_5_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_ore_6_rotate<-image_fill(harbour_ore_6_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_sheep_1_rotate<-image_fill(harbour_sheep_1_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_sheep_2_rotate<-image_fill(harbour_sheep_2_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_sheep_3_rotate<-image_fill(harbour_sheep_3_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_sheep_4_rotate<-image_fill(harbour_sheep_4_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_sheep_5_rotate<-image_fill(harbour_sheep_5_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_sheep_6_rotate<-image_fill(harbour_sheep_6_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_brick_1_rotate<-image_fill(harbour_brick_1_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_brick_2_rotate<-image_fill(harbour_brick_2_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_brick_3_rotate<-image_fill(harbour_brick_3_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_brick_4_rotate<-image_fill(harbour_brick_4_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_brick_5_rotate<-image_fill(harbour_brick_5_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_brick_6_rotate<-image_fill(harbour_brick_6_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_general_1_rotate<-image_fill(harbour_general_1_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_general_2_rotate<-image_fill(harbour_general_2_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_general_3_rotate<-image_fill(harbour_general_3_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_general_4_rotate<-image_fill(harbour_general_4_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_general_5_rotate<-image_fill(harbour_general_5_rotate,color="none",point="+5+5",fuzz = 10)
-harbour_general_6_rotate<-image_fill(harbour_general_6_rotate,color="none",point="+5+5",fuzz = 10)
-
-sea_1_rotate <- image_trim(sea_1_rotate, fuzz = 6)
-sea_2_rotate <- image_trim(sea_2_rotate, fuzz = 6)
-sea_3_rotate <- image_trim(sea_3_rotate, fuzz = 6)
-sea_4_rotate <- image_trim(sea_4_rotate, fuzz = 6)
-sea_5_rotate <- image_trim(sea_5_rotate, fuzz = 6)
-sea_6_rotate <- image_trim(sea_6_rotate, fuzz = 6)
-harbour_wood_1_rotate <- image_trim(harbour_wood_1_rotate, fuzz = 6)
-harbour_wood_2_rotate <- image_trim(harbour_wood_2_rotate, fuzz = 6)
-harbour_wood_3_rotate <- image_trim(harbour_wood_3_rotate, fuzz = 6)
-harbour_wood_4_rotate <- image_trim(harbour_wood_4_rotate, fuzz = 6)
-harbour_wood_5_rotate <- image_trim(harbour_wood_5_rotate, fuzz = 6)
-harbour_wood_6_rotate <- image_trim(harbour_wood_6_rotate, fuzz = 6)
-harbour_grain_1_rotate <- image_trim(harbour_grain_1_rotate, fuzz = 6)
-harbour_grain_2_rotate <- image_trim(harbour_grain_2_rotate, fuzz = 6)
-harbour_grain_3_rotate <- image_trim(harbour_grain_3_rotate, fuzz = 6)
-harbour_grain_4_rotate <- image_trim(harbour_grain_4_rotate, fuzz = 6)
-harbour_grain_5_rotate <- image_trim(harbour_grain_5_rotate, fuzz = 6)
-harbour_grain_6_rotate <- image_trim(harbour_grain_6_rotate, fuzz = 6)
-harbour_ore_1_rotate <- image_trim(harbour_ore_1_rotate, fuzz = 6)
-harbour_ore_2_rotate <- image_trim(harbour_ore_2_rotate, fuzz = 6)
-harbour_ore_3_rotate <- image_trim(harbour_ore_3_rotate, fuzz = 6)
-harbour_ore_4_rotate <- image_trim(harbour_ore_4_rotate, fuzz = 6)
-harbour_ore_5_rotate <- image_trim(harbour_ore_5_rotate, fuzz = 6)
-harbour_ore_6_rotate <- image_trim(harbour_ore_6_rotate, fuzz = 6)
-harbour_sheep_1_rotate <- image_trim(harbour_sheep_1_rotate, fuzz = 6)
-harbour_sheep_2_rotate <- image_trim(harbour_sheep_2_rotate, fuzz = 6)
-harbour_sheep_3_rotate <- image_trim(harbour_sheep_3_rotate, fuzz = 6)
-harbour_sheep_4_rotate <- image_trim(harbour_sheep_4_rotate, fuzz = 6)
-harbour_sheep_5_rotate <- image_trim(harbour_sheep_5_rotate, fuzz = 6)
-harbour_sheep_6_rotate <- image_trim(harbour_sheep_6_rotate, fuzz = 6)
-harbour_brick_1_rotate <- image_trim(harbour_brick_1_rotate, fuzz = 6)
-harbour_brick_2_rotate <- image_trim(harbour_brick_2_rotate, fuzz = 6)
-harbour_brick_3_rotate <- image_trim(harbour_brick_3_rotate, fuzz = 6)
-harbour_brick_4_rotate <- image_trim(harbour_brick_4_rotate, fuzz = 6)
-harbour_brick_5_rotate <- image_trim(harbour_brick_5_rotate, fuzz = 6)
-harbour_brick_6_rotate <- image_trim(harbour_brick_6_rotate, fuzz = 6)
-harbour_general_1_rotate <- image_trim(harbour_general_1_rotate, fuzz = 6)
-harbour_general_2_rotate <- image_trim(harbour_general_2_rotate, fuzz = 6)
-harbour_general_3_rotate <- image_trim(harbour_general_3_rotate, fuzz = 6)
-harbour_general_4_rotate <- image_trim(harbour_general_4_rotate, fuzz = 6)
-harbour_general_5_rotate <- image_trim(harbour_general_5_rotate, fuzz = 6)
-harbour_general_6_rotate <- image_trim(harbour_general_6_rotate, fuzz = 6)
-
-harbour_wood_1_rotate<-image_mosaic(c(harbour_wood_1_rotate, harbour_wood_circle))
-harbour_wood_2_rotate<-image_mosaic(c(harbour_wood_2_rotate, harbour_wood_circle))
-harbour_wood_3_rotate<-image_mosaic(c(harbour_wood_3_rotate, harbour_wood_circle))
-harbour_wood_4_rotate<-image_mosaic(c(harbour_wood_4_rotate, harbour_wood_circle))
-harbour_wood_5_rotate<-image_mosaic(c(harbour_wood_5_rotate, harbour_wood_circle))
-harbour_wood_6_rotate<-image_mosaic(c(harbour_wood_6_rotate, harbour_wood_circle))
-harbour_grain_1_rotate<-image_mosaic(c(harbour_grain_1_rotate, harbour_grain_circle))
-harbour_grain_2_rotate<-image_mosaic(c(harbour_grain_2_rotate, harbour_grain_circle))
-harbour_grain_3_rotate<-image_mosaic(c(harbour_grain_3_rotate, harbour_grain_circle))
-harbour_grain_4_rotate<-image_mosaic(c(harbour_grain_4_rotate, harbour_grain_circle))
-harbour_grain_5_rotate<-image_mosaic(c(harbour_grain_5_rotate, harbour_grain_circle))
-harbour_grain_6_rotate<-image_mosaic(c(harbour_grain_6_rotate, harbour_grain_circle))
-harbour_ore_1_rotate<-image_mosaic(c(harbour_ore_1_rotate, harbour_ore_circle))
-harbour_ore_2_rotate<-image_mosaic(c(harbour_ore_2_rotate, harbour_ore_circle))
-harbour_ore_3_rotate<-image_mosaic(c(harbour_ore_3_rotate, harbour_ore_circle))
-harbour_ore_4_rotate<-image_mosaic(c(harbour_ore_4_rotate, harbour_ore_circle))
-harbour_ore_5_rotate<-image_mosaic(c(harbour_ore_5_rotate, harbour_ore_circle))
-harbour_ore_6_rotate<-image_mosaic(c(harbour_ore_6_rotate, harbour_ore_circle))
-harbour_sheep_1_rotate<-image_mosaic(c(harbour_sheep_1_rotate, harbour_sheep_circle))
-harbour_sheep_2_rotate<-image_mosaic(c(harbour_sheep_2_rotate, harbour_sheep_circle))
-harbour_sheep_3_rotate<-image_mosaic(c(harbour_sheep_3_rotate, harbour_sheep_circle))
-harbour_sheep_4_rotate<-image_mosaic(c(harbour_sheep_4_rotate, harbour_sheep_circle))
-harbour_sheep_5_rotate<-image_mosaic(c(harbour_sheep_5_rotate, harbour_sheep_circle))
-harbour_sheep_6_rotate<-image_mosaic(c(harbour_sheep_6_rotate, harbour_sheep_circle))
-harbour_brick_1_rotate<-image_mosaic(c(harbour_brick_1_rotate, harbour_brick_circle))
-harbour_brick_2_rotate<-image_mosaic(c(harbour_brick_2_rotate, harbour_brick_circle))
-harbour_brick_3_rotate<-image_mosaic(c(harbour_brick_3_rotate, harbour_brick_circle))
-harbour_brick_4_rotate<-image_mosaic(c(harbour_brick_4_rotate, harbour_brick_circle))
-harbour_brick_5_rotate<-image_mosaic(c(harbour_brick_5_rotate, harbour_brick_circle))
-harbour_brick_6_rotate<-image_mosaic(c(harbour_brick_6_rotate, harbour_brick_circle))
-harbour_general_1_rotate<-image_mosaic(c(harbour_general_1_rotate, harbour_general_circle))
-harbour_general_2_rotate<-image_mosaic(c(harbour_general_2_rotate, harbour_general_circle))
-harbour_general_3_rotate<-image_mosaic(c(harbour_general_3_rotate, harbour_general_circle))
-harbour_general_4_rotate<-image_mosaic(c(harbour_general_4_rotate, harbour_general_circle))
-harbour_general_5_rotate<-image_mosaic(c(harbour_general_5_rotate, harbour_general_circle))
-harbour_general_6_rotate<-image_mosaic(c(harbour_general_6_rotate, harbour_general_circle))
-
-harbour_wood_1<-image_scale(harbour_wood_1_rotate, 400)
-harbour_wood_2<-image_scale(harbour_wood_2_rotate, 400)
-harbour_wood_3<-image_scale(harbour_wood_3_rotate, 400)
-harbour_wood_4<-image_scale(harbour_wood_4_rotate, 400)
-harbour_wood_5<-image_scale(harbour_wood_5_rotate, 400)
-harbour_wood_6<-image_scale(harbour_wood_6_rotate, 400)
-harbour_grain_1<-image_scale(harbour_grain_1_rotate, 400)
-harbour_grain_2<-image_scale(harbour_grain_2_rotate, 400)
-harbour_grain_3<-image_scale(harbour_grain_3_rotate, 400)
-harbour_grain_4<-image_scale(harbour_grain_4_rotate, 400)
-harbour_grain_5<-image_scale(harbour_grain_5_rotate, 400)
-harbour_grain_6<-image_scale(harbour_grain_6_rotate, 400)
-harbour_ore_1<-image_scale(harbour_ore_1_rotate, 400)
-harbour_ore_2<-image_scale(harbour_ore_2_rotate, 400)
-harbour_ore_3<-image_scale(harbour_ore_3_rotate, 400)
-harbour_ore_4<-image_scale(harbour_ore_4_rotate, 400)
-harbour_ore_5<-image_scale(harbour_ore_5_rotate, 400)
-harbour_ore_6<-image_scale(harbour_ore_6_rotate, 400)
-harbour_sheep_1<-image_scale(harbour_sheep_1_rotate, 400)
-harbour_sheep_2<-image_scale(harbour_sheep_2_rotate, 400)
-harbour_sheep_3<-image_scale(harbour_sheep_3_rotate, 400)
-harbour_sheep_4<-image_scale(harbour_sheep_4_rotate, 400)
-harbour_sheep_5<-image_scale(harbour_sheep_5_rotate, 400)
-harbour_sheep_6<-image_scale(harbour_sheep_6_rotate, 400)
-harbour_brick_1<-image_scale(harbour_brick_1_rotate, 400)
-harbour_brick_2<-image_scale(harbour_brick_2_rotate, 400)
-harbour_brick_3<-image_scale(harbour_brick_3_rotate, 400)
-harbour_brick_4<-image_scale(harbour_brick_4_rotate, 400)
-harbour_brick_5<-image_scale(harbour_brick_5_rotate, 400)
-harbour_brick_6<-image_scale(harbour_brick_6_rotate, 400)
-harbour_general_1<-image_scale(harbour_general_1_rotate, 400)
-harbour_general_2<-image_scale(harbour_general_2_rotate, 400)
-harbour_general_3<-image_scale(harbour_general_3_rotate, 400)
-harbour_general_4<-image_scale(harbour_general_4_rotate, 400)
-harbour_general_5<-image_scale(harbour_general_5_rotate, 400)
-harbour_general_6<-image_scale(harbour_general_6_rotate, 400)
-sea_1<-image_scale(sea_1_rotate, 400)
-sea_2<-image_scale(sea_2_rotate, 400)
-sea_3<-image_scale(sea_3_rotate, 400)
-sea_4<-image_scale(sea_4_rotate, 400)
-sea_5<-image_scale(sea_5_rotate, 400)
-sea_6<-image_scale(sea_6_rotate, 400)
-
-image_write(sea_1,"/Users/Paul/Desktop/R_Catan/sea_1.png")
-image_write(sea_2,"/Users/Paul/Desktop/R_Catan/sea_2.png")
-image_write(sea_3,"/Users/Paul/Desktop/R_Catan/sea_3.png")
-image_write(sea_4,"/Users/Paul/Desktop/R_Catan/sea_4.png")
-image_write(sea_5,"/Users/Paul/Desktop/R_Catan/sea_5.png")
-image_write(sea_6,"/Users/Paul/Desktop/R_Catan/sea_6.png")
-image_write(harbour_wood_1,"/Users/Paul/Desktop/R_Catan/harbour_wood_1.png")
-image_write(harbour_wood_2,"/Users/Paul/Desktop/R_Catan/harbour_wood_2.png")
-image_write(harbour_wood_3,"/Users/Paul/Desktop/R_Catan/harbour_wood_3.png")
-image_write(harbour_wood_4,"/Users/Paul/Desktop/R_Catan/harbour_wood_4.png")
-image_write(harbour_wood_5,"/Users/Paul/Desktop/R_Catan/harbour_wood_5.png")
-image_write(harbour_wood_6,"/Users/Paul/Desktop/R_Catan/harbour_wood_6.png")
-image_write(harbour_grain_1,"/Users/Paul/Desktop/R_Catan/harbour_grain_1.png")
-image_write(harbour_grain_2,"/Users/Paul/Desktop/R_Catan/harbour_grain_2.png")
-image_write(harbour_grain_3,"/Users/Paul/Desktop/R_Catan/harbour_grain_3.png")
-image_write(harbour_grain_4,"/Users/Paul/Desktop/R_Catan/harbour_grain_4.png")
-image_write(harbour_grain_5,"/Users/Paul/Desktop/R_Catan/harbour_grain_5.png")
-image_write(harbour_grain_6,"/Users/Paul/Desktop/R_Catan/harbour_grain_6.png")
-image_write(harbour_ore_1,"/Users/Paul/Desktop/R_Catan/harbour_ore_1.png")
-image_write(harbour_ore_2,"/Users/Paul/Desktop/R_Catan/harbour_ore_2.png")
-image_write(harbour_ore_3,"/Users/Paul/Desktop/R_Catan/harbour_ore_3.png")
-image_write(harbour_ore_4,"/Users/Paul/Desktop/R_Catan/harbour_ore_4.png")
-image_write(harbour_ore_5,"/Users/Paul/Desktop/R_Catan/harbour_ore_5.png")
-image_write(harbour_ore_6,"/Users/Paul/Desktop/R_Catan/harbour_ore_6.png")
-image_write(harbour_sheep_1,"/Users/Paul/Desktop/R_Catan/harbour_sheep_1.png")
-image_write(harbour_sheep_2,"/Users/Paul/Desktop/R_Catan/harbour_sheep_2.png")
-image_write(harbour_sheep_3,"/Users/Paul/Desktop/R_Catan/harbour_sheep_3.png")
-image_write(harbour_sheep_4,"/Users/Paul/Desktop/R_Catan/harbour_sheep_4.png")
-image_write(harbour_sheep_5,"/Users/Paul/Desktop/R_Catan/harbour_sheep_5.png")
-image_write(harbour_sheep_6,"/Users/Paul/Desktop/R_Catan/harbour_sheep_6.png")
-image_write(harbour_brick_1,"/Users/Paul/Desktop/R_Catan/harbour_brick_1.png")
-image_write(harbour_brick_2,"/Users/Paul/Desktop/R_Catan/harbour_brick_2.png")
-image_write(harbour_brick_3,"/Users/Paul/Desktop/R_Catan/harbour_brick_3.png")
-image_write(harbour_brick_4,"/Users/Paul/Desktop/R_Catan/harbour_brick_4.png")
-image_write(harbour_brick_5,"/Users/Paul/Desktop/R_Catan/harbour_brick_5.png")
-image_write(harbour_brick_6,"/Users/Paul/Desktop/R_Catan/harbour_brick_6.png")
-image_write(harbour_general_1,"/Users/Paul/Desktop/R_Catan/harbour_general_1.png")
-image_write(harbour_general_2,"/Users/Paul/Desktop/R_Catan/harbour_general_2.png")
-image_write(harbour_general_3,"/Users/Paul/Desktop/R_Catan/harbour_general_3.png")
-image_write(harbour_general_4,"/Users/Paul/Desktop/R_Catan/harbour_general_4.png")
-image_write(harbour_general_5,"/Users/Paul/Desktop/R_Catan/harbour_general_5.png")
-image_write(harbour_general_6,"/Users/Paul/Desktop/R_Catan/harbour_general_6.png")
